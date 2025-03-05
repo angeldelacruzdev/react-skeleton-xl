@@ -8,6 +8,7 @@ import AuthLoader from "../components/AuthLoader";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import Profile from "../components/Profile";
+import CategoryList from "../pages/CategoryList";
 
 const AppRoutes = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +41,7 @@ const AppRoutes = () => {
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/categories" element={<CategoryList />} />
           </Route>
         </Route>
       </Routes>
