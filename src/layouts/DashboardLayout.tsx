@@ -52,7 +52,7 @@ const DashboardLayout = () => {
             alt="Avatar"
             className="w-20 h-20 rounded-full border-2 border-gray-600"
           />
-          <h2 className="text-lg font-semibold mt-2 dark:text-white">{user?.email}</h2>
+          <h2 className="text-sm font-semibold mt-2 dark:text-white">{user?.email}</h2>
         </div>
 
         {/* Menú de navegación */}

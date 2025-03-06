@@ -1,12 +1,13 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithReauth } from "../baseQueryWithReauth";
 
 export const categoryApi = createApi({
     reducerPath: "categoryApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
+    baseQuery: baseQueryWithReauth,
     tagTypes: ["Category"],
     endpoints: (builder) => ({
         getCategories: builder.query({
-            query: () => "/categories",
+            query: ({ page = 1, search = "" }) => `/categories?page=${page}&search=${search}&pageSize=10`,
             providesTags: ["Category"],
         }),
         createCategory: builder.mutation({

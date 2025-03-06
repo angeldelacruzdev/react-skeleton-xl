@@ -6,6 +6,7 @@ import {
 } from "../redux/api/categoryApi";
 import { toast } from "react-hot-toast";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import CategoryForm from "../components/categories/CategoryForm";
 
 const CategoryList = () => {
   const [search, setSearch] = useState("");
@@ -42,8 +43,9 @@ const CategoryList = () => {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
       <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-        Lista de Categorías
+        Lista de Categorías ({data?.pagination?.totalCount})
       </h2>
+      <CategoryForm />
 
       {/* Barra de búsqueda */}
       <input
@@ -110,8 +112,15 @@ const CategoryList = () => {
         </button>
         <span className="text-gray-900 dark:text-white">Página {page}</span>
         <button
-          disabled={!data?.hasMore}
-          onClick={() => setPage((prev) => prev + 1)}
+          disabled={!data?.pagination?.currentPage}
+          onClick={() =>
+            setPage((prev) => {
+              if (data?.pagination?.totalPages === prev) {
+                return data?.pagination?.totalPages;
+              }
+              return prev + 1;
+            })
+          }
           className="px-3 py-1 bg-gray-300 dark:bg-gray-600 rounded-lg disabled:opacity-50"
         >
           Siguiente
