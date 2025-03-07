@@ -69,6 +69,15 @@ const DashboardLayout = () => {
             </li>
             <li>
               <Link
+                to="/users-management"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 transition dark:text-white"
+              >
+                <UserIcon className="w-6 h-6" />
+                <span>User management</span>
+              </Link>
+            </li>
+            <li>
+              <Link
                 to="/profile"
                 className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700 transition dark:text-white"
               >
