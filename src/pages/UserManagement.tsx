@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useGetUsersQuery, useDeleteUserMutation } from "../redux/api/userApi";
 import {
+  PencilIcon,
   PencilSquareIcon,
   PlusCircleIcon,
   TrashIcon,
@@ -9,6 +10,7 @@ import toast from "react-hot-toast";
 import Modal from "../components/Modal";
 import UserForm from "../components/users/UserForm";
 import ReusableModal from "../components/ReusableModal";
+import EditUserRoles from "../components/users/EditUserRoles";
 
 const UserList = () => {
   const [search, setSearch] = useState("");
@@ -18,6 +20,8 @@ const UserList = () => {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
+
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
 
   const handleDelete = async () => {
@@ -29,6 +33,11 @@ const UserList = () => {
     } catch (error) {
       toast.error("Error al eliminar el usuario");
     }
+  };
+
+  const openEditModal = (user: any) => {
+    setSelectedUser(user);
+    setIsEditUserModalOpen(true);
   };
 
   return (
@@ -93,6 +102,13 @@ const UserList = () => {
                     >
                       <TrashIcon className="w-5 h-5" />
                     </button>
+                    <button
+                      className="p-2 text-blue-600 hover:text-blue-800"
+                      onClick={() => openEditModal(user)}
+                      title="Editar usuario"
+                    >
+                      <PencilIcon className="h-5 w-5" />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -136,6 +152,18 @@ const UserList = () => {
         title="Crear Usuario"
       >
         <UserForm onClose={() => setIsUserModalOpen(false)} />
+      </ReusableModal>
+      <ReusableModal
+        isOpen={isEditUserModalOpen}
+        onClose={() => setIsEditUserModalOpen(false)}
+        title="Editar Usuario"
+      >
+        {selectedUser && (
+          <EditUserRoles
+            user={selectedUser}
+            onClose={() => setIsEditUserModalOpen(false)}
+          />
+        )}
       </ReusableModal>
     </div>
   );
