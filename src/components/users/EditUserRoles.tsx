@@ -20,7 +20,6 @@ const schema = yup.object().shape({
 });
 
 const EditUserRoles = ({ user, onClose }: EditUserRolesProps) => {
-    console.log(user)
   const {
     register,
     handleSubmit,
@@ -29,8 +28,8 @@ const EditUserRoles = ({ user, onClose }: EditUserRolesProps) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      role: user?.role?.name || "",
-      permissions: user?.permissions?.map((p: any) => p.name) || [],
+      role: user?.roles || "",
+      permissions: user?.permissions?.map((p: any) => p),
     },
   });
 
@@ -41,7 +40,7 @@ const EditUserRoles = ({ user, onClose }: EditUserRolesProps) => {
 
   // Estado para manejar permisos seleccionados
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>(
-    user?.permissions?.map((p: any) => p.name) || []
+    user?.permissions?.map((p: any) => p) || []
   );
 
   useEffect(() => {
@@ -84,7 +83,6 @@ const EditUserRoles = ({ user, onClose }: EditUserRolesProps) => {
           </label>
           <select
             {...register("role")}
-        
             className={`w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white ${
               errors.role ? "border-red-500" : "border-gray-300"
             } focus:border-blue-500 focus:ring focus:ring-blue-200`}
@@ -96,7 +94,7 @@ const EditUserRoles = ({ user, onClose }: EditUserRolesProps) => {
               <option
                 key={r.id}
                 value={r.name}
-                selected={r.name === user?.role?.name}
+                selected={r.name === user?.roles}
               >
                 {r.name}
               </option>
