@@ -16,7 +16,7 @@ interface EditUserRolesProps {
 // Esquema de validación
 const schema = yup.object().shape({
   role: yup.string().required("Debe seleccionar un rol"),
-  permissions: yup.array().of(yup.string()),
+  permissionIds: yup.array().of(yup.string()),
 });
 
 const EditUserRoles = ({ user, onClose }: EditUserRolesProps) => {
@@ -29,7 +29,7 @@ const EditUserRoles = ({ user, onClose }: EditUserRolesProps) => {
     resolver: yupResolver(schema),
     defaultValues: {
       role: user?.roles || "",
-      permissions: user?.permissions?.map((p: any) => p),
+      permissionIds: user?.permissions?.map((p: any) => p),
     },
   });
 
@@ -44,7 +44,7 @@ const EditUserRoles = ({ user, onClose }: EditUserRolesProps) => {
   );
 
   useEffect(() => {
-    setValue("permissions", selectedPermissions);
+    setValue("permissionIds", selectedPermissions);
   }, [selectedPermissions, setValue]);
 
   const handlePermissionChange = (permission: string) => {
